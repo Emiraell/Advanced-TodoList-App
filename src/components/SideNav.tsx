@@ -26,9 +26,12 @@ export default function SideNav({ menuClicked }: clickedMenu) {
   const [editUser, setEditUser] = useState<boolean>(false);
   return (
     <div>
-      <div className={`${!menuClicked && "hidden"}`}>
+      <div className={`${!menuClicked && "hidden"} lg:block my-10`}>
         <div className="flex items-center tracking-wide">
-          <FontAwesomeIcon icon={faUser} className="h-6" />
+          <FontAwesomeIcon
+            icon={faUser}
+            className="h-6 rounded-full bg-emerald-900 p-2"
+          />
           <div className="-ml-4 px-6 mt-4">
             <p className=" text-xl">{userName}</p>
             <p className="text-xs" onClick={() => setEditUser(true)}>
@@ -57,9 +60,9 @@ export default function SideNav({ menuClicked }: clickedMenu) {
             </span>
           </div>
         )}
-        <div className="py-5">
+        <div className="my-10">
           {menuContents.map((content) => (
-            <ol className="py-3" key={content.path}>
+            <ol className="my-8 text-lg" key={content.path}>
               {content.name}
             </ol>
           ))}

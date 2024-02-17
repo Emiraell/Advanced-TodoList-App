@@ -7,3 +7,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.input {
+  @apply w-full p-3 outline-none rounded-md bg-gray-800 mt-1;
+}
