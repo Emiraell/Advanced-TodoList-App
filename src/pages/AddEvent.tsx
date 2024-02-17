@@ -3,6 +3,7 @@ import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useAppDispatch } from "../store/store";
 import { addTask } from "../store/features/Tasks";
+import { useNavigate } from "react-router-dom";
 
 interface TaskState {
   title: string;
@@ -23,9 +24,12 @@ export default function AddEvent() {
 
   const dispatch = useAppDispatch();
 
+  const navigate = useNavigate();
+
   const addTas = (data: TaskState) => {
     dispatch(addTask(data));
     //console.log(data, "submitted");
+    navigate("/home");
   };
 
   return (
