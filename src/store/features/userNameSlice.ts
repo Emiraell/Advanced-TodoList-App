@@ -9,7 +9,7 @@ export const userNameSlice = createSlice({
   name: "userName",
   initialState,
   reducers: {
-    changeUserName: (state, action: PayloadAction<any>) => {
+    changeUserName: (state, action: PayloadAction<string>) => {
       state.userName = action.payload;
     },
   },
