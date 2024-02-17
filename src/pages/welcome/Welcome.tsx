@@ -3,6 +3,7 @@ import work from "./assests/coverImage.png";
 import { motion } from "framer-motion";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
+import { Link } from "react-router-dom";
 export function Welcome() {
   return (
     <div className="  m-auto text-center w-[80%] md:w-[60%] lg:w-[40%] pt-10">
@@ -47,11 +48,13 @@ export function Welcome() {
         transition={{ delay: 1, duration: 1 }}
         className="pt-10 flex items-center"
       >
-        <span className="text-lg px-5">Get started</span>
-        <FontAwesomeIcon
-          icon={faArrowRight}
-          className="text-3xl text-gray-900 bg-gray-200 rounded-full py-2 px-3"
-        />
+        <span className="text-lg px-5">Get started</span>{" "}
+        <Link to="/home">
+          <FontAwesomeIcon
+            icon={faArrowRight}
+            className="text-3xl text-gray-900 bg-gray-200 rounded-full py-2 px-3"
+          />{" "}
+        </Link>
       </motion.div>
     </div>
   );
