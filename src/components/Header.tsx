@@ -1,6 +1,6 @@
 import { faBell, faUser, faX } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 interface menuContent {
   name: string;
@@ -16,7 +16,13 @@ export default function Header() {
     { name: "Trash", path: "trash" },
   ];
 
-  const [userName, setUserName] = useState<string>("user");
+  const [userName, setUserName] = useState<string>(
+    localStorage.getItem("name") || "user"
+  );
+
+  useEffect(() => {
+    localStorage.setItem("name", userName);
+  }, [userName]);
   return (
     <div>
       <div className="py-10 px-7 flex fixed left-0 right-0 justify-between z-10">
@@ -26,14 +32,15 @@ export default function Header() {
               icon={faUser}
               className={`h-8 ${menuClicked && "hidden"}`}
             />{" "}
-            <div className=" flex font-rochester items-center justify-between">
+            <div
+              className={`flex font-rochester items-center justify-between  ${
+                !menuClicked && "hidden"
+              }`}
+            >
               <p>
                 <span className="text-red-600 ">Emirael</span> Todo
               </p>
-              <FontAwesomeIcon
-                icon={faX}
-                className={`h-5 ${!menuClicked && "hidden"}`}
-              />
+              <FontAwesomeIcon icon={faX} className={`h-5`} />
             </div>
           </div>
 
@@ -54,9 +61,9 @@ export default function Header() {
                 <input
                   value={nameValue}
                   type="text"
-                  className="w-28 outline-none rounded py-3 px-1 h-4 bg-gray-800"
+                  className="w-28 outline-none rounded py-3 px-1 h-4 bg-gray-800 mr-2"
                   onChange={(e) => setNameValue(e.target.value)}
-                />{" "}
+                />
                 <span
                   onClick={() => {
                     setUserName(nameValue);
@@ -64,7 +71,7 @@ export default function Header() {
                     setNameValue("");
                   }}
                 >
-                  change
+                  save
                 </span>
               </div>
             )}
