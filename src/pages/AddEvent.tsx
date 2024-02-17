@@ -1,6 +1,8 @@
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { useAppDispatch } from "../store/store";
+import { addTask } from "../store/features/Tasks";
 
 interface TaskState {
   title: string;
@@ -19,16 +21,21 @@ export default function AddEvent() {
     formState: { errors },
   } = useForm({ resolver: yupResolver(schema) });
 
-  const addTask = (data: TaskState) => {
-    console.log(data, "submitted");
+  const dispatch = useAppDispatch();
+
+  const addTas = (data: TaskState) => {
+    dispatch(addTask(data));
+    //console.log(data, "submitted");
   };
+
   return (
     <div className="m-auto w-[85%] md:w-[60%] lg:w-[40%] ">
       <p className="text-center text-2xl text-emerald-400 py-12 font-bold font-montserrat">
         New Task
       </p>
+
       <form
-        onSubmit={handleSubmit(addTask)}
+        onSubmit={handleSubmit(addTas)}
         className="shadow-lg bg-gray-950 text-lg tracking-wider font-poppins p-5 rounded-lg"
       >
         {/* tittle */}
