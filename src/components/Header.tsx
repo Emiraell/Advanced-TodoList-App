@@ -1,24 +1,30 @@
 import { faBell, faUser, faX } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useState } from "react";
+import { useAppDispatch, useAppSelector } from "../store/store";
+import { changeUserName } from "../store/features/userNameSlice";
 
 interface menuContent {
   name: string;
   path: string;
 }
 export default function Header() {
+  const userName = useAppSelector((state) => state.userNameReducer.userName);
+  const dispatch = useAppDispatch();
+
   const [nameValue, setNameValue] = useState<string>("");
   const [editUser, setEditUser] = useState<boolean>(false);
   const [menuClicked, setMenuClicked] = useState<boolean>(false);
+
   const menuContents: menuContent[] = [
     { name: "Completed Event", path: "completed" },
     { name: "Bookmarks", path: "bookmarks" },
     { name: "Trash", path: "trash" },
   ];
 
-  const [userName, setUserName] = useState<string>(
-    localStorage.getItem("name") || "user"
-  );
+  // const [userName, setUserName] = useState<string>(
+  //   localStorage.getItem("name") || "user"
+  // );
 
   useEffect(() => {
     localStorage.setItem("name", userName);
@@ -66,7 +72,7 @@ export default function Header() {
                 />
                 <span
                   onClick={() => {
-                    setUserName(nameValue);
+                    dispatch(changeUserName(nameValue));
                     setEditUser(false);
                     setNameValue("");
                   }}
