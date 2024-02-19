@@ -6,12 +6,8 @@ import { addTask } from "../store/features/Tasks";
 import { Link, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
+import { task } from "../store/features/Tasks";
 
-interface TaskState {
-  title: string;
-  date: string;
-  description: string;
-}
 export default function AddEvent() {
   const schema = yup.object().shape({
     title: yup.string().required(),
@@ -28,7 +24,7 @@ export default function AddEvent() {
 
   const navigate = useNavigate();
 
-  const addTodo = (data: TaskState) => {
+  const addTodo = (data: task) => {
     dispatch(addTask(data));
     navigate("/home");
   };

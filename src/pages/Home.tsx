@@ -1,8 +1,19 @@
 import { EffectCallback, useEffect, useState } from "react";
 import Header from "../components/Header";
+import { useAppSelector } from "../store/store";
+import { task } from "../store/features/Tasks";
+import { boolean } from "yup";
+
+type displayState = { completed: boolean; favourite: boolean; trash: boolean };
 
 export default function Home() {
   let fullDate: any = new Date();
+
+  const [displaying, setDisplaying] = useState<displayState>({
+    completed: false,
+    favourite: false,
+    trash: false,
+  });
 
   const [greeting, setGreeting] = useState<string>();
   const [day, setDay] = useState<string>();
@@ -42,17 +53,57 @@ export default function Home() {
     return (): void => {};
   }, []);
 
+  const tasks: task[] = useAppSelector((state) => state.taskReducer.tasks);
+
+  const userName: string = useAppSelector(
+    (state) => state.userNameReducer.userName
+  );
+
   return (
-    <div className="md: grid grid-cols-4">
+    <div className="md:grid grid-cols-4">
       <div className=" col-span-1">
         <Header />
       </div>
-      <div className="m-auto w-[85%]  text-start pt-[12vh] col-span-3 md:border-l pl-5">
-        <p className="text-xl md:text-2xl tracking-wider ">{greeting}</p>
-        <p className=" font-rochester text-lg md:text-xl">Today is {day}</p>
-        <p>
-          {date} {month}, {year}
-        </p>
+      <div className="m-auto w-[90%] md:w-full text-start lg:pt-[17vh] pt-[12vh] col-span-3 md:border-l h-[100vh] md:px-20">
+        <>
+          <p className="text-2xl md:text-3xl tracking-wider text-emerald-400 py-3 ">
+            {greeting}{" "}
+            <span className=" text-gray-100">
+              {userName !== "user" && userName}
+            </span>
+          </p>
+          <p className=" font-rochester text-lg md:text-xl pl-3">
+            Today's {day}
+          </p>
+          <p className=" text-gray-400 text-xs pl-3">
+            {month} {date}, {year}
+          </p>
+        </>
+        <div className="pt-10 pl-3">
+          <p className="text-xl border-b-2 w-fit pb-2 border-emerald-500">
+            <span className=" bg-gray-300 text-gray-900 px-3 py-1 rounded-full mr-2">
+              {tasks.length}
+            </span>
+            Tasks
+          </p>
+        </div>
+
+        {/* todos */}
+        <div>
+          {tasks.map((task, index) => (
+            <div
+              key={index}
+              className="bg-blue-400 w-full p-5 rounded-2xl tracking-wider my-7 even:bg-yellow-400 text-gray-800"
+            >
+              {" "}
+              <div className="flex justify-between items-center text-lg">
+                <h2 className="font-bold text-xl">{task.title}</h2>
+                <span>{task.date}</span>
+              </div>
+              <p>{task.description}</p>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );

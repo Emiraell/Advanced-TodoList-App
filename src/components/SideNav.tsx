@@ -34,8 +34,11 @@ export default function SideNav({ menuClicked }: clickedMenu) {
           />
           <div className="-ml-4 px-6 mt-4">
             <p className=" text-xl">{userName}</p>
-            <p className="text-xs" onClick={() => setEditUser(true)}>
-              {!editUser && "change name"}
+            <p
+              className="text-sm text-center"
+              onClick={() => setEditUser(true)}
+            >
+              {!editUser && "Edit"}
             </p>
           </div>
         </div>
