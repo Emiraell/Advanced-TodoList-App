@@ -26,7 +26,7 @@ export default function SideNav({ menuClicked }: clickedMenu) {
   const [editUser, setEditUser] = useState<boolean>(false);
   return (
     <div>
-      <div className={`${!menuClicked && "hidden"} lg:block my-10`}>
+      <div className={`${!menuClicked && "hidden"} md:block my-10`}>
         <div className="flex items-center tracking-wide">
           <FontAwesomeIcon
             icon={faUser}

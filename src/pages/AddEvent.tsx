@@ -3,7 +3,9 @@ import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useAppDispatch } from "../store/store";
 import { addTask } from "../store/features/Tasks";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 
 interface TaskState {
   title: string;
@@ -26,20 +28,22 @@ export default function AddEvent() {
 
   const navigate = useNavigate();
 
-  const addTas = (data: TaskState) => {
+  const addTodo = (data: TaskState) => {
     dispatch(addTask(data));
-    //console.log(data, "submitted");
     navigate("/home");
   };
 
   return (
     <div className="m-auto w-[85%] md:w-[60%] lg:w-[40%] ">
-      <p className="text-center text-2xl text-emerald-400 py-12 font-bold font-montserrat">
-        New Task
-      </p>
+      <div className="py-12 text-2xl text-emerald-400  font-bold flex items-center">
+        <Link to="/home">
+          <FontAwesomeIcon icon={faArrowLeft} className="pl-4" />
+        </Link>
+        <p className="font-montserrat px-20 md:px-32 lg:px-36">New Task</p>
+      </div>
 
       <form
-        onSubmit={handleSubmit(addTas)}
+        onSubmit={handleSubmit(addTodo)}
         className="shadow-lg bg-gray-950 text-lg tracking-wider font-poppins p-5 rounded-lg"
       >
         {/* tittle */}

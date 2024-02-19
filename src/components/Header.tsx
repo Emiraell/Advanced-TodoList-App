@@ -23,17 +23,17 @@ export default function Header() {
               icon={faUser}
               className={`h-8 ${
                 menuClicked && "hidden"
-              } lg:hidden bg-emerald-900 p-3 rounded-full`}
+              } md:hidden bg-emerald-900 p-3 rounded-full`}
             />{" "}
             <div
               className={`flex font-rochester items-center justify-between text-2xl  ${
                 !menuClicked && "hidden"
-              } lg:block`}
+              } md:block`}
             >
               <p>
                 <span className="text-red-400 ">Emirael</span> Todo
               </p>
-              <FontAwesomeIcon icon={faX} className={`h-5 lg:hidden`} />
+              <FontAwesomeIcon icon={faX} className={`h-5 md:hidden`} />
             </div>
           </div>
           <SideNav menuClicked={menuClicked} />
