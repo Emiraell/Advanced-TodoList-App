@@ -8,6 +8,11 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { task } from "../store/features/Tasks";
 
+interface dataProps {
+  title: string;
+  date: string;
+  description: string;
+}
 export default function AddEvent() {
   const schema = yup.object().shape({
     title: yup.string().required(),
@@ -24,8 +29,9 @@ export default function AddEvent() {
 
   const navigate = useNavigate();
 
-  const addTodo = (data: task) => {
-    dispatch(addTask(data));
+  const addTodo = (data: dataProps) => {
+    const dataa: task = { ...data, clicked: false };
+    dispatch(addTask(dataa));
     navigate("/home");
   };
 
