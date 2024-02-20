@@ -3,9 +3,14 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState } from "react";
 import SideNav from "./SideNav";
 import { Link } from "react-router-dom";
+import { useAppSelector } from "../store/store";
+import { notification } from "../store/features/notificationSlice";
 
 export default function Header() {
   const [menuClicked, setMenuClicked] = useState<boolean>(false);
+  const notification: notification[] | undefined = useAppSelector(
+    (state) => state.notificationReducer?.contents
+  );
 
   return (
     <div>
@@ -43,8 +48,8 @@ export default function Header() {
         <div className="flex items-center ">
           <div className="flex justify-evenly w-20 relative  mx-5">
             <FontAwesomeIcon icon={faBell} className="h-8" />
-            <p className="absolute bg-red-700 rounded-full p-1 -top-4 right-4">
-              10
+            <p className="absolute bg-red-700 rounded-full py-1 px-2 -top-4 right-4">
+              {notification?.length}
             </p>
           </div>
           <Link to="/add_event">

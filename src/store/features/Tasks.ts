@@ -16,14 +16,14 @@ const initialState: taskState = {
   tasks: [
     {
       id: 1,
-      title: "WALK MY DOG",
+      title: "walk my dog",
       date: "19 Oct, 2024",
       description: "wal rosy out of the hpuse",
       clicked: false,
     },
     {
       id: 2,
-      title: "WALK MY DOG2",
+      title: "Walk my dog2",
       date: "19 Oct, 2024",
       description: "wal rosy out of the hpuse",
       clicked: false,

@@ -4,7 +4,7 @@ interface userState {
   userName: string;
 }
 
-const name = localStorage.getItem("username") || "user";
+const name: string = localStorage.getItem("username") || "user";
 const initialState: userState = { userName: name };
 export const userNameSlice = createSlice({
   name: "userName",
@@ -12,7 +12,7 @@ export const userNameSlice = createSlice({
   reducers: {
     changeUserName: (state, action: PayloadAction<string>) => {
       state.userName = action.payload;
-      let name = state.userName;
+      let name: string = state.userName;
       localStorage.setItem("username", name);
     },
   },

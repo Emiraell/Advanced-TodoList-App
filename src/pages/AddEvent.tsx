@@ -7,6 +7,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { task } from "../store/features/Tasks";
+import { addNotification } from "../store/features/notificationSlice";
 
 interface dataProps {
   title: string;
@@ -35,6 +36,12 @@ export default function AddEvent() {
   const addTodo = (data: dataProps) => {
     const dataa: task = { ...data, id: taskId, clicked: false };
     dispatch(addTask(dataa));
+    dispatch(
+      addNotification({
+        header: `Added a task to your events`,
+        message: data.title,
+      })
+    );
     navigate("/home");
   };
 

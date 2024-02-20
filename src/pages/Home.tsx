@@ -94,36 +94,54 @@ export default function Home() {
         </div>
 
         {/* todos */}
-        <div className="mt-10">
+        <div className="mt-10 lg:grid grid-cols-2 gap-4">
           {tasks.map((task, index) => (
             <div
               key={index}
               className="bg-blue-400 w-full p-5 rounded-2xl tracking-wider my-7 even:bg-yellow-400 text-gray-800"
             >
-              <div className="flex justify-between items-center text-lg">
+              <div
+                className={`flex justify-between items-center text-lg ${
+                  task.clicked && "hidden"
+                }`}
+              >
                 <p>
                   <FontAwesomeIcon icon={faUser} className="h-6" />{" "}
                   <span>{userName}</span>
                 </p>
                 <span>{task.date}</span>
               </div>
-              <div className="flex items-center justify-between text-xl">
-                <p className="p-4 font-bold uppercase ">{task.title}</p>
+              <div
+                className={`${
+                  !task.clicked && "flex"
+                } items-center justify-between text-xl`}
+              >
+                <p
+                  className={`p-4 font-bold uppercase ${
+                    task.clicked && "hidden"
+                  }`}
+                >
+                  {task.title}
+                </p>
                 <div
+                  className={`${task.clicked && "text-3xl text-end p-2"} h-fit`}
                   onClick={() => {
                     dispatch(viewTaskDetail(task));
                   }}
                 >
-                  {!task.clicked ? (
+                  {task.clicked ? (
                     <FontAwesomeIcon icon={faChevronCircleDown} />
                   ) : (
                     <FontAwesomeIcon icon={faChevronCircleUp} />
                   )}
                 </div>
               </div>
-              <p className={`${!task.clicked && "hidden"}`}>
-                {task.description}
-              </p>
+              <div className={`${!task.clicked && "hidden"}`}>
+                <h2 className=" font-montserrat font-bold text-3xl break-all">
+                  {task.title}
+                </h2>
+                <p>{task.description}</p>
+              </div>
             </div>
           ))}
         </div>
