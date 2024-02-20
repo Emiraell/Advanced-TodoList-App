@@ -47,11 +47,10 @@ export const TaskSlice = createSlice({
     },
     viewTaskDetail: (state, action: PayloadAction<task>) => {
       state.tasks.map((task: task) => {
-        if (
-          task.id === action.payload.id &&
-          task.clicked === action.payload.clicked
-        ) {
+        if (task.id === action.payload.id) {
           task.clicked = !task.clicked;
+        } else {
+          task.clicked = false;
         }
       });
     },

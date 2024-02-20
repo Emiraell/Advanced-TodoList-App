@@ -94,7 +94,7 @@ export default function Home() {
         </div>
 
         {/* todos */}
-        <div>
+        <div className="mt-10">
           {tasks.map((task, index) => (
             <div
               key={index}
