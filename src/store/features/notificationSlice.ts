@@ -9,7 +9,10 @@ interface notificationState {
   contents: notification[];
 }
 
-let initialState: notificationState = { contents: [] };
+const messages = localStorage.getItem("messages");
+let initialState: notificationState = {
+  contents: messages ? (JSON.parse(messages) as notification[]) : [],
+};
 export const notificationSlice = createSlice({
   name: "notification",
   initialState,
@@ -19,6 +22,8 @@ export const notificationSlice = createSlice({
         header: action.payload.header,
         message: action.payload.message,
       });
+      const notifications: notification[] = state.contents;
+      localStorage.setItem("messages", JSON.stringify(notifications));
     },
   },
 });

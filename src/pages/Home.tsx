@@ -1,13 +1,16 @@
 import { EffectCallback, useEffect, useState } from "react";
 import Header from "../components/Header";
 import { useAppDispatch, useAppSelector } from "../store/store";
-import { viewTaskDetail, task } from "../store/features/Tasks";
+import { viewTaskDetail, task, removeTask } from "../store/features/Tasks";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-regular-svg-icons";
 import {
   faChevronCircleDown,
-  faChevronCircleUp,
+  faTrash,
+  faX,
 } from "@fortawesome/free-solid-svg-icons";
+import { faMarkdown } from "@fortawesome/free-brands-svg-icons";
+import { motion } from "framer-motion";
 
 // type displayState = { completed: boolean; favourite: boolean; trash: boolean };
 
@@ -96,7 +99,10 @@ export default function Home() {
         {/* todos */}
         <div className="mt-10 lg:grid grid-cols-2 gap-4">
           {tasks.map((task, index) => (
-            <div
+            <motion.div
+              initial={{ y: 100 }}
+              whileInView={{ y: 0 }}
+              transition={{ duration: 0.5, delay: 0.5 }}
               key={index}
               className="bg-blue-400 w-full p-5 rounded-2xl tracking-wider my-7 even:bg-yellow-400 text-gray-800"
             >
@@ -124,15 +130,15 @@ export default function Home() {
                   {task.title}
                 </p>
                 <div
-                  className={`${task.clicked && "text-3xl text-end p-2"} h-fit`}
+                  className={`${task.clicked && "text-xl text-end p-2"} h-fit`}
                   onClick={() => {
                     dispatch(viewTaskDetail(task));
                   }}
                 >
-                  {task.clicked ? (
+                  {!task.clicked ? (
                     <FontAwesomeIcon icon={faChevronCircleDown} />
                   ) : (
-                    <FontAwesomeIcon icon={faChevronCircleUp} />
+                    <FontAwesomeIcon icon={faX} />
                   )}
                 </div>
               </div>
@@ -140,9 +146,38 @@ export default function Home() {
                 <h2 className=" font-montserrat font-bold text-3xl break-all">
                   {task.title}
                 </h2>
-                <p>{task.description}</p>
+                <div className="my-10 flex items-center justify-between px-3">
+                  <div>
+                    <p className=" text-emerald-700 font-bold">Date Created</p>
+                    <p className="text-sm px-1">oct 23, 2023</p>
+                  </div>
+                  <div>
+                    <p className="text-emerald-700 font-bold">Task Date</p>
+                    <p className="text-sm px-1">{task.date}</p>
+                  </div>
+                </div>
+                <div className="text-lg">
+                  {" "}
+                  <h2 className="font-bold text-emerald-700">
+                    Task Description
+                  </h2>
+                  <p className="">{task.description}</p>
+                </div>
+
+                <button className="w-full mt-10 bg-gray-900 text-gray-100 p-3 hover:opacity-80 duration-0.5 rounded-full">
+                  <FontAwesomeIcon icon={faMarkdown} />{" "}
+                  <p className="inline">Set as done</p>
+                </button>
+                <button
+                  onClick={() => dispatch(removeTask(task))}
+                  className="w-full mt-3 bg-red-800 text-gray-100 p-3 hover:opacity-80 duration-0.5 rounded-full"
+                >
+                  {" "}
+                  <p className="inline px-2">Delete Task</p>
+                  <FontAwesomeIcon icon={faTrash} />
+                </button>
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
       </div>

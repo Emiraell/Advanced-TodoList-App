@@ -49,7 +49,7 @@ export default function Header() {
           <div className="flex justify-evenly w-20 relative  mx-5">
             <FontAwesomeIcon icon={faBell} className="h-8" />
             <p className="absolute bg-red-700 rounded-full py-1 px-2 -top-4 right-4">
-              {notification?.length}
+              {notification.length}
             </p>
           </div>
           <Link to="/add_event">

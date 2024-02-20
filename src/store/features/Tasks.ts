@@ -12,23 +12,9 @@ interface taskState {
   tasks: task[];
 }
 
+const localData = localStorage.getItem("tasks");
 const initialState: taskState = {
-  tasks: [
-    {
-      id: 1,
-      title: "walk my dog",
-      date: "19 Oct, 2024",
-      description: "wal rosy out of the hpuse",
-      clicked: false,
-    },
-    {
-      id: 2,
-      title: "Walk my dog2",
-      date: "19 Oct, 2024",
-      description: "wal rosy out of the hpuse",
-      clicked: false,
-    },
-  ],
+  tasks: localData ? (JSON.parse(localData) as task[]) : [],
 };
 
 export const TaskSlice = createSlice({
@@ -43,7 +29,8 @@ export const TaskSlice = createSlice({
         description: action.payload.description,
         clicked: false,
       });
-      console.log(state.tasks);
+      const taskToStore: task[] = state.tasks;
+      localStorage.setItem("tasks", JSON.stringify(taskToStore));
     },
     viewTaskDetail: (state, action: PayloadAction<task>) => {
       state.tasks.map((task: task) => {
@@ -54,8 +41,13 @@ export const TaskSlice = createSlice({
         }
       });
     },
+    removeTask: (state, action: PayloadAction<task>) => {
+      state.tasks = state.tasks.filter((task: task) => {
+        task.id !== action.payload.id;
+      });
+    },
   },
 });
 
-export const { addTask, viewTaskDetail } = TaskSlice.actions;
+export const { addTask, viewTaskDetail, removeTask } = TaskSlice.actions;
 export default TaskSlice.reducer;
