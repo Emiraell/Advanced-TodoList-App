@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useAppDispatch } from "../store/store";
+import { useAppDispatch, useAppSelector } from "../store/store";
 import { addTask } from "../store/features/Tasks";
 import { Link, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -26,11 +26,14 @@ export default function AddEvent() {
   } = useForm({ resolver: yupResolver(schema) });
 
   const dispatch = useAppDispatch();
+  const taskId: number = useAppSelector(
+    (state) => state.taskReducer.tasks.length
+  );
 
   const navigate = useNavigate();
 
   const addTodo = (data: dataProps) => {
-    const dataa: task = { ...data, clicked: false };
+    const dataa: task = { ...data, id: taskId, clicked: false };
     dispatch(addTask(dataa));
     navigate("/home");
   };

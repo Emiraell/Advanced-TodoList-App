@@ -111,10 +111,7 @@ export default function Home() {
                 <p className="p-4 font-bold uppercase ">{task.title}</p>
                 <div
                   onClick={() => {
-                    // showTask(task);
-                    dispatch(viewTaskDetail(task.clicked));
-                    // setShowTaskContent(!showTaskContent);
-                    // console.log(task);
+                    dispatch(viewTaskDetail(task));
                   }}
                 >
                   {!task.clicked ? (
@@ -124,7 +121,9 @@ export default function Home() {
                   )}
                 </div>
               </div>
-              <p className="hidden">{task.description}</p>
+              <p className={`${!task.clicked && "hidden"}`}>
+                {task.description}
+              </p>
             </div>
           ))}
         </div>

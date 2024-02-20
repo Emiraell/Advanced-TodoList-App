@@ -1,6 +1,7 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
 export type task = {
+  id: number;
   title: string;
   date: string;
   description: string;
@@ -14,16 +15,18 @@ interface taskState {
 const initialState: taskState = {
   tasks: [
     {
+      id: 1,
       title: "WALK MY DOG",
       date: "19 Oct, 2024",
       description: "wal rosy out of the hpuse",
       clicked: false,
     },
     {
+      id: 2,
       title: "WALK MY DOG2",
       date: "19 Oct, 2024",
       description: "wal rosy out of the hpuse",
-      clicked: true,
+      clicked: false,
     },
   ],
 };
@@ -34,6 +37,7 @@ export const TaskSlice = createSlice({
   reducers: {
     addTask: (state, action: PayloadAction<task>) => {
       state.tasks.push({
+        id: state.tasks.length,
         title: action.payload.title,
         date: action.payload.date,
         description: action.payload.description,
@@ -41,9 +45,12 @@ export const TaskSlice = createSlice({
       });
       console.log(state.tasks);
     },
-    viewTaskDetail: (state, action: PayloadAction<boolean>) => {
+    viewTaskDetail: (state, action: PayloadAction<task>) => {
       state.tasks.map((task: task) => {
-        if (task.clicked === action.payload) {
+        if (
+          task.id === action.payload.id &&
+          task.clicked === action.payload.clicked
+        ) {
           task.clicked = !task.clicked;
         }
       });
