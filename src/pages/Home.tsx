@@ -11,6 +11,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { faMarkdown } from "@fortawesome/free-brands-svg-icons";
 import { motion } from "framer-motion";
+import { addNotification } from "../store/features/notificationSlice";
 
 // type displayState = { completed: boolean; favourite: boolean; trash: boolean };
 
@@ -23,7 +24,7 @@ export default function Home() {
   //   trash: false,
   // });
 
-  const tasks: task[] = useAppSelector((state) => state.taskReducer.tasks);
+  let tasks: task[] = useAppSelector((state) => state.taskReducer.tasks);
 
   const [greeting, setGreeting] = useState<string>();
   const [day, setDay] = useState<string>();
@@ -142,6 +143,26 @@ export default function Home() {
                   )}
                 </div>
               </div>
+
+              <button
+                onClick={() => {
+                  dispatch(removeTask(task));
+                  dispatch(
+                    addNotification({
+                      header: "You deleted a task",
+                      message: task.title,
+                    })
+                  );
+                }}
+                className={`w-full mt-3 bg-transparent border-red-800 border-2 text-red-800 p-3 
+                hover:bg-red-800 hover:text-gray-100 duration-0.5 rounded-full ${
+                  task.clicked && "hidden"
+                }`}
+              >
+                {" "}
+                <p className="inline px-2">Delete Task</p>
+                <FontAwesomeIcon icon={faTrash} />
+              </button>
               <div className={`${!task.clicked && "hidden"}`}>
                 <h2 className=" font-montserrat font-bold text-3xl break-all">
                   {task.title}
@@ -167,14 +188,6 @@ export default function Home() {
                 <button className="w-full mt-10 bg-gray-900 text-gray-100 p-3 hover:opacity-80 duration-0.5 rounded-full">
                   <FontAwesomeIcon icon={faMarkdown} />{" "}
                   <p className="inline">Set as done</p>
-                </button>
-                <button
-                  onClick={() => dispatch(removeTask(task))}
-                  className="w-full mt-3 bg-red-800 text-gray-100 p-3 hover:opacity-80 duration-0.5 rounded-full"
-                >
-                  {" "}
-                  <p className="inline px-2">Delete Task</p>
-                  <FontAwesomeIcon icon={faTrash} />
                 </button>
               </div>
             </motion.div>

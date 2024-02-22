@@ -13,17 +13,30 @@ interface taskState {
 }
 
 const localData = localStorage.getItem("tasks");
+let result;
+try {
+  result = localData && (JSON.parse(localData) as task[]);
+} catch (err) {
+  console.log(err);
+}
 const initialState: taskState = {
-  tasks: localData ? (JSON.parse(localData) as task[]) : [],
+  tasks: result || [],
 };
 
 export const TaskSlice = createSlice({
   name: "tasks",
   initialState,
   reducers: {
-    addTask: (state, action: PayloadAction<task>) => {
+    addTask: (
+      state,
+      action: PayloadAction<{
+        title: string;
+        date: string;
+        description: string;
+      }>
+    ) => {
       state.tasks.push({
-        id: state.tasks.length,
+        id: state.tasks.length - 1,
         title: action.payload.title,
         date: action.payload.date,
         description: action.payload.description,
@@ -33,7 +46,7 @@ export const TaskSlice = createSlice({
       localStorage.setItem("tasks", JSON.stringify(taskToStore));
     },
     viewTaskDetail: (state, action: PayloadAction<task>) => {
-      state.tasks.map((task: task) => {
+      state.tasks.map((task) => {
         if (task.id === action.payload.id) {
           task.clicked = !task.clicked;
         } else {
@@ -41,10 +54,18 @@ export const TaskSlice = createSlice({
         }
       });
     },
-    removeTask: (state, action: PayloadAction<task>) => {
-      state.tasks = state.tasks.filter((task: task) => {
-        task.id !== action.payload.id;
+    removeTask: (state, action) => {
+      state.tasks.map((taskk) => {
+        if (taskk.id === action.payload.id) {
+          state.tasks.splice(taskk.id, 1);
+          state.tasks.map((taskId) => {
+            taskId.id = taskId.id - 1;
+          });
+        }
       });
+      console.log(action.payload);
+
+      localStorage.setItem("tasks", JSON.stringify(state.tasks));
     },
   },
 });

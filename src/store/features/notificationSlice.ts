@@ -10,8 +10,16 @@ interface notificationState {
 }
 
 const messages = localStorage.getItem("messages");
-let initialState: notificationState = {
-  contents: messages ? (JSON.parse(messages) as notification[]) : [],
+
+let notificationMessage;
+try {
+  notificationMessage = messages && (JSON.parse("messages") as notification[]);
+} catch (err) {
+  console.log(err);
+}
+
+const initialState: notificationState = {
+  contents: notificationMessage || [],
 };
 export const notificationSlice = createSlice({
   name: "notification",
