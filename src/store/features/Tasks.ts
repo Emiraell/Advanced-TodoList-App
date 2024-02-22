@@ -35,7 +35,7 @@ export const TaskSlice = createSlice({
         description: string;
       }>
     ) => {
-      state.tasks.push({
+      state.tasks.unshift({
         id: state.tasks.length - 1,
         title: action.payload.title,
         date: action.payload.date,
@@ -54,7 +54,7 @@ export const TaskSlice = createSlice({
         }
       });
     },
-    removeTask: (state, action) => {
+    removeTask: (state, action: PayloadAction<task>) => {
       state.tasks.map((taskk) => {
         if (taskk.id === action.payload.id) {
           state.tasks.splice(taskk.id, 1);

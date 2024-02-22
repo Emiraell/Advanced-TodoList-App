@@ -1,6 +1,7 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
 export interface notification {
+  id: number;
   header: string;
   message: string;
 }
@@ -26,9 +27,22 @@ export const notificationSlice = createSlice({
   initialState,
   reducers: {
     addNotification: (state, action: PayloadAction<notification>) => {
-      state?.contents.push({
+      state?.contents.unshift({
+        id: state.contents.length - 1,
         header: action.payload.header,
         message: action.payload.message,
+      });
+      const notifications: notification[] = state.contents;
+      localStorage.setItem("messages", JSON.stringify(notifications));
+    },
+    removeNotification: (state, action: PayloadAction<notification>) => {
+      state.contents.map((content) => {
+        if (content.message === action.payload.message) {
+          state.contents.splice(content.id, 1);
+          state.contents.map((contentId) => {
+            contentId.id = content.id - 1;
+          });
+        }
       });
       const notifications: notification[] = state.contents;
       localStorage.setItem("messages", JSON.stringify(notifications));
@@ -36,5 +50,6 @@ export const notificationSlice = createSlice({
   },
 });
 
-export const { addNotification } = notificationSlice.actions;
+export const { addNotification, removeNotification } =
+  notificationSlice.actions;
 export default notificationSlice.reducer;

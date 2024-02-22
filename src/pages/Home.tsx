@@ -11,7 +11,10 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { faMarkdown } from "@fortawesome/free-brands-svg-icons";
 import { motion } from "framer-motion";
-import { addNotification } from "../store/features/notificationSlice";
+import {
+  addNotification,
+  notification,
+} from "../store/features/notificationSlice";
 
 // type displayState = { completed: boolean; favourite: boolean; trash: boolean };
 
@@ -68,6 +71,9 @@ export default function Home() {
     (state) => state.userNameReducer.userName
   );
 
+  const notifications: notification[] = useAppSelector(
+    (state) => state.notificationReducer.contents
+  );
   const dispatch = useAppDispatch();
 
   return (
@@ -105,7 +111,7 @@ export default function Home() {
               whileInView={{ y: 0 }}
               transition={{ duration: 0.5, delay: 0.5 }}
               key={index}
-              className="bg-blue-400 w-full p-5 rounded-2xl tracking-wider my-7 even:bg-yellow-400 text-gray-800"
+              className="bg-blue-400 w-full p-5 rounded-2xl tracking-wider my-7 shadow-md even:bg-yellow-400 text-gray-800"
             >
               <div
                 className={`flex justify-between items-center text-lg ${
@@ -149,6 +155,7 @@ export default function Home() {
                   dispatch(removeTask(task));
                   dispatch(
                     addNotification({
+                      id: notifications.length - 1,
                       header: "You deleted a task",
                       message: task.title,
                     })

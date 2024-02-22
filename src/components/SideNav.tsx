@@ -17,9 +17,9 @@ export default function SideNav({ menuClicked }: clickedMenu) {
   const dispatch = useAppDispatch();
 
   const menuContents: menuContent[] = [
-    { name: "Completed Event", path: "completed" },
-    { name: "Bookmarks", path: "bookmarks" },
-    { name: "Trash", path: "trash" },
+    { name: "Completed", path: "completed" },
+    { name: "Favorite", path: "favorite" },
+    { name: "Reset", path: "" },
   ];
 
   const [nameValue, setNameValue] = useState<string>("");

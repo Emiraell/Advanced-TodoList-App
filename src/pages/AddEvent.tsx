@@ -30,6 +30,9 @@ export default function AddEvent() {
   const taskId: number = useAppSelector(
     (state) => state.taskReducer.tasks.length
   );
+  const notificationId = useAppSelector(
+    (state) => state.notificationReducer.contents.length
+  );
 
   const navigate = useNavigate();
 
@@ -38,6 +41,7 @@ export default function AddEvent() {
     dispatch(addTask(dataa));
     dispatch(
       addNotification({
+        id: notificationId - 1,
         header: `Added a task to your events`,
         message: data.title,
       })
