@@ -16,12 +16,6 @@ export default function SideNav({ menuClicked }: clickedMenu) {
   const userName = useAppSelector((state) => state.userNameReducer.userName);
   const dispatch = useAppDispatch();
 
-  const menuContents: menuContent[] = [
-    { name: "Completed", path: "completed" },
-    { name: "Favorite", path: "favorite" },
-    { name: "Reset", path: "" },
-  ];
-
   const [nameValue, setNameValue] = useState<string>("");
   const [editUser, setEditUser] = useState<boolean>(false);
   return (
@@ -63,12 +57,8 @@ export default function SideNav({ menuClicked }: clickedMenu) {
             </span>
           </div>
         )}
-        <div className="my-10">
-          {menuContents.map((content) => (
-            <ol className="my-8 text-lg" key={content.path}>
-              {content.name}
-            </ol>
-          ))}
+        <div className="my-16">
+          <button className=" bg-red-600 w-full rounded-md">Reset</button>
         </div>
       </div>
     </div>

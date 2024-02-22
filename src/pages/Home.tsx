@@ -1,33 +1,41 @@
 import { EffectCallback, useEffect, useState } from "react";
 import Header from "../components/Header";
-import { useAppDispatch, useAppSelector } from "../store/store";
-import { viewTaskDetail, task, removeTask } from "../store/features/Tasks";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUser } from "@fortawesome/free-regular-svg-icons";
+import { useAppSelector } from "../store/store";
 import {
-  faChevronCircleDown,
-  faTrash,
-  faX,
-} from "@fortawesome/free-solid-svg-icons";
-import { faMarkdown } from "@fortawesome/free-brands-svg-icons";
-import { motion } from "framer-motion";
-import {
-  addNotification,
-  notification,
-} from "../store/features/notificationSlice";
+  // viewTaskDetail,
+  task,
+  // removeTask,
+  // completeTask,
+} from "../store/features/Tasks";
+// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+// import { faUser } from "@fortawesome/free-regular-svg-icons";
+// import {
+//   faChevronCircleDown,
+//   faTrash,
+//   faX,
+// } from "@fortawesome/free-solid-svg-icons";
+// import { faMarkdown } from "@fortawesome/free-brands-svg-icons";
+// import { motion } from "framer-motion";
+// import {
+//   addNotification,
+//   notification,
+// } from "../store/features/notificationSlice";
+import TaskList from "../components/TaskList";
 
-// type displayState = { completed: boolean; favourite: boolean; trash: boolean };
+type displayState = { tasks: boolean; complete: boolean };
 
 export default function Home() {
   let fullDate: any = new Date();
 
-  // const [displaying, setDisplaying] = useState<displayState>({
-  //   completed: false,
-  //   favourite: false,
-  //   trash: false,
-  // });
+  const [displaying, setDisplaying] = useState<displayState>({
+    tasks: true,
+    complete: false,
+  });
 
   let tasks: task[] = useAppSelector((state) => state.taskReducer.tasks);
+  let completedTasks: task[] = useAppSelector(
+    (state) => state.taskReducer.completed
+  );
 
   const [greeting, setGreeting] = useState<string>();
   const [day, setDay] = useState<string>();
@@ -71,10 +79,10 @@ export default function Home() {
     (state) => state.userNameReducer.userName
   );
 
-  const notifications: notification[] = useAppSelector(
-    (state) => state.notificationReducer.contents
-  );
-  const dispatch = useAppDispatch();
+  // const notifications: notification[] = useAppSelector(
+  //   (state) => state.notificationReducer.contents
+  // );
+  // const dispatch = useAppDispatch();
 
   return (
     <div className="md:grid grid-cols-4">
@@ -94,111 +102,41 @@ export default function Home() {
             {month} {date}, {year}
           </p>
         </div>
-        <div className="pt-12 px-10">
-          <p className="text-xl border-b-2 w-fit pb-2 border-emerald-500">
+        <div className="pt-12 px-10 flex items-center text-xl">
+          <p
+            onClick={() => setDisplaying({ tasks: true, complete: false })}
+            className={`${
+              displaying.tasks && "border-b-2"
+            }  w-fit pb-2 border-emerald-500`}
+          >
             <span className=" bg-gray-300 text-gray-900 px-3 py-1 rounded-full mr-2">
               {tasks.length}
             </span>
             Tasks
           </p>
+          <p
+            onClick={() => setDisplaying({ tasks: false, complete: true })}
+            className={` ${
+              displaying.complete && "border-b-2"
+            } w-fit pb-2 border-emerald-500 mx-10`}
+          >
+            <span className=" bg-gray-300 text-gray-900 px-3 py-1 rounded-full m-2">
+              {completedTasks.length}
+            </span>
+            completed
+          </p>
         </div>
-
         {/* todos */}
         <div className="mt-10 lg:grid grid-cols-2 gap-4">
-          {tasks.map((task, index) => (
-            <motion.div
-              initial={{ y: 100 }}
-              whileInView={{ y: 0 }}
-              transition={{ duration: 0.5, delay: 0.5 }}
-              key={index}
-              className="bg-blue-400 w-full p-5 rounded-2xl tracking-wider my-7 shadow-md even:bg-yellow-400 text-gray-800"
-            >
-              <div
-                className={`flex justify-between items-center text-lg ${
-                  task.clicked && "hidden"
-                }`}
-              >
-                <p>
-                  <FontAwesomeIcon icon={faUser} className="h-6" />{" "}
-                  <span>{userName}</span>
-                </p>
-                <span>{task.date}</span>
-              </div>
-              <div
-                className={`${
-                  !task.clicked && "flex"
-                } items-center justify-between text-xl`}
-              >
-                <p
-                  className={`p-4 font-bold uppercase ${
-                    task.clicked && "hidden"
-                  }`}
-                >
-                  {task.title}
-                </p>
-                <div
-                  className={`${task.clicked && "text-xl text-end p-2"} h-fit`}
-                  onClick={() => {
-                    dispatch(viewTaskDetail(task));
-                  }}
-                >
-                  {!task.clicked ? (
-                    <FontAwesomeIcon icon={faChevronCircleDown} />
-                  ) : (
-                    <FontAwesomeIcon icon={faX} />
-                  )}
+          {displaying.tasks
+            ? tasks.map((task, index) => (
+                <TaskList key={index} task={task} userName={userName} />
+              ))
+            : completedTasks.map((task, index) => (
+                <div key={index}>
+                  <h2>{task.title}</h2>
                 </div>
-              </div>
-
-              <button
-                onClick={() => {
-                  dispatch(removeTask(task));
-                  dispatch(
-                    addNotification({
-                      id: notifications.length - 1,
-                      header: "You deleted a task",
-                      message: task.title,
-                    })
-                  );
-                }}
-                className={`w-full mt-3 bg-transparent border-red-800 border-2 text-red-800 p-3 
-                hover:bg-red-800 hover:text-gray-100 duration-0.5 rounded-full ${
-                  task.clicked && "hidden"
-                }`}
-              >
-                {" "}
-                <p className="inline px-2">Delete Task</p>
-                <FontAwesomeIcon icon={faTrash} />
-              </button>
-              <div className={`${!task.clicked && "hidden"}`}>
-                <h2 className=" font-montserrat font-bold text-3xl break-all">
-                  {task.title}
-                </h2>
-                <div className="my-10 flex items-center justify-between px-3">
-                  <div>
-                    <p className=" text-emerald-700 font-bold">Date Created</p>
-                    <p className="text-sm px-1">oct 23, 2023</p>
-                  </div>
-                  <div>
-                    <p className="text-emerald-700 font-bold">Task Date</p>
-                    <p className="text-sm px-1">{task.date}</p>
-                  </div>
-                </div>
-                <div className="text-lg">
-                  {" "}
-                  <h2 className="font-bold text-emerald-700">
-                    Task Description
-                  </h2>
-                  <p className="">{task.description}</p>
-                </div>
-
-                <button className="w-full mt-10 bg-gray-900 text-gray-100 p-3 hover:opacity-80 duration-0.5 rounded-full">
-                  <FontAwesomeIcon icon={faMarkdown} />{" "}
-                  <p className="inline">Set as done</p>
-                </button>
-              </div>
-            </motion.div>
-          ))}
+              ))}
         </div>
       </div>
     </div>

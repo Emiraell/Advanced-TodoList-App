@@ -13,14 +13,18 @@ interface taskState {
 }
 
 const localData = localStorage.getItem("tasks");
+const completedTask = localStorage.getItem("completed");
 let result;
+let completedTodo;
 try {
   result = localData && (JSON.parse(localData) as task[]);
+  completedTodo = completedTask && (JSON.parse(completedTask) as task[]);
 } catch (err) {
   console.log(err);
 }
-const initialState: taskState = {
-  tasks: result || [],
+const initialState = {
+  tasks: (result as task[]) || [],
+  completed: (completedTodo as task[]) || [],
 };
 
 export const TaskSlice = createSlice({
@@ -63,12 +67,23 @@ export const TaskSlice = createSlice({
           });
         }
       });
-      console.log(action.payload);
 
       localStorage.setItem("tasks", JSON.stringify(state.tasks));
+    },
+
+    completeTask: (state, action: PayloadAction<task>) => {
+      state.tasks.map((task) => {
+        if (task.id === action.payload.id) {
+          const completed = action.payload;
+          state.completed.unshift(completed);
+          localStorage.setItem("completed", JSON.stringify(state.completed));
+          // removeTask(task);
+        }
+      });
     },
   },
 });
 
-export const { addTask, viewTaskDetail, removeTask } = TaskSlice.actions;
+export const { addTask, viewTaskDetail, removeTask, completeTask } =
+  TaskSlice.actions;
 export default TaskSlice.reducer;
