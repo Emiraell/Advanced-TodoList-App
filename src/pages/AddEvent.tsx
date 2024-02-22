@@ -47,7 +47,7 @@ export default function AddEvent() {
 
   return (
     <div className="m-auto w-[85%] md:w-[60%] lg:w-[40%] ">
-      <div className="py-12 text-2xl text-emerald-400  font-bold flex items-center">
+      <div className="py-12 text-2xl text-emerald-400 font-bold flex items-center">
         <Link to="/home">
           <FontAwesomeIcon icon={faArrowLeft} className="pl-4" />
         </Link>

@@ -5,7 +5,7 @@ export interface notification {
   message: string;
 }
 
-interface notificationState {
+export interface notificationState {
   contents: notification[];
 }
 
@@ -13,7 +13,7 @@ const messages = localStorage.getItem("messages");
 
 let notificationMessage;
 try {
-  notificationMessage = messages && (JSON.parse("messages") as notification[]);
+  notificationMessage = messages && (JSON.parse(messages) as notification[]);
 } catch (err) {
   console.log(err);
 }
