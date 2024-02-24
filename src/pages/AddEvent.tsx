@@ -37,7 +37,12 @@ export default function AddEvent() {
   const navigate = useNavigate();
 
   const addTodo = (data: dataProps) => {
-    const dataa: task = { ...data, id: taskId, clicked: false };
+    const dataa: task = {
+      ...data,
+      id: taskId,
+      clicked: false,
+      completed: false,
+    };
     dispatch(addTask(dataa));
     dispatch(
       addNotification({

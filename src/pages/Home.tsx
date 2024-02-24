@@ -1,25 +1,7 @@
 import { EffectCallback, useEffect, useState } from "react";
 import Header from "../components/Header";
 import { useAppSelector } from "../store/store";
-import {
-  // viewTaskDetail,
-  task,
-  // removeTask,
-  // completeTask,
-} from "../store/features/Tasks";
-// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-// import { faUser } from "@fortawesome/free-regular-svg-icons";
-// import {
-//   faChevronCircleDown,
-//   faTrash,
-//   faX,
-// } from "@fortawesome/free-solid-svg-icons";
-// import { faMarkdown } from "@fortawesome/free-brands-svg-icons";
-// import { motion } from "framer-motion";
-// import {
-//   addNotification,
-//   notification,
-// } from "../store/features/notificationSlice";
+import { task } from "../store/features/Tasks";
 import TaskList from "../components/TaskList";
 
 type displayState = { tasks: boolean; complete: boolean };
@@ -79,11 +61,6 @@ export default function Home() {
     (state) => state.userNameReducer.userName
   );
 
-  // const notifications: notification[] = useAppSelector(
-  //   (state) => state.notificationReducer.contents
-  // );
-  // const dispatch = useAppDispatch();
-
   return (
     <div className="md:grid grid-cols-4">
       <div className=" col-span-1">
@@ -133,9 +110,7 @@ export default function Home() {
                 <TaskList key={index} task={task} userName={userName} />
               ))
             : completedTasks.map((task, index) => (
-                <div key={index}>
-                  <h2>{task.title}</h2>
-                </div>
+                <TaskList key={index} task={task} userName={userName} />
               ))}
         </div>
       </div>

@@ -27,8 +27,8 @@ export const notificationSlice = createSlice({
   initialState,
   reducers: {
     addNotification: (state, action: PayloadAction<notification>) => {
-      state?.contents.unshift({
-        id: state.contents.length - 1,
+      state?.contents.push({
+        id: state.contents.length,
         header: action.payload.header,
         message: action.payload.message,
       });
