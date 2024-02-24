@@ -11,7 +11,6 @@ import {
   removeTask,
   completeTask,
   task,
-  removeCompleted,
 } from "../store/features/Tasks";
 import {
   addNotification,
@@ -36,7 +35,9 @@ export default function TaskList({ task, userName }: propss) {
     dispatch(
       addNotification({
         id: notifications.length,
-        header: "You deleted a task",
+        header: !name.completed
+          ? "You deleted a task from your tasks"
+          : "You deleted a task from completed task ",
         message: task.title,
       })
     );

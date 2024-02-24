@@ -72,6 +72,7 @@ export const TaskSlice = createSlice({
             });
           }
         });
+        localStorage.setItem("tasks", JSON.stringify(state.tasks));
       } else {
         state.completed.map((task) => {
           if (task.id === action.payload.id) {
@@ -83,32 +84,14 @@ export const TaskSlice = createSlice({
             });
           }
         });
+        localStorage.setItem("completed", JSON.stringify(state.completed));
       }
-      // state.tasks.map((taskk) => {
-      //   if (taskk.id === action.payload.id && !taskk.completed) {
-      //     state.tasks.splice(taskk.id, 1);
-      //     state.tasks.map((taskId) => {
-      //       if (taskId.id > taskk.id) {
-      //         taskId.id = taskId.id - 1;
-      //       }
-      //     });
-      //   }
-      console.log("deleted");
-      // else if (taskk.id === action.payload.id && taskk.completed) {
-      //   state.completed.pop();
-      //   state.completed.map((taskId) => {
-      //     taskId.id = taskId.id - 1;
-      //     console.log("deleted");
-      //   });
-      // }
-      // });
-
-      // localStorage.setItem("tasks", JSON.stringify(state.tasks));
     },
 
     completeTask: (state, action: PayloadAction<task>) => {
       state.tasks.map((comTask) => {
         if (comTask.id === action.payload.id) {
+          comTask.id = state.completed.length;
           state.completed.push(comTask);
           state.tasks.splice(comTask.id, 1);
           state.tasks.map((taskId) => {
@@ -116,28 +99,14 @@ export const TaskSlice = createSlice({
               taskId.id = taskId.id - 1;
             }
             comTask.completed = true;
+            localStorage.setItem("completed", JSON.stringify(state.completed));
           });
-          console.log(action.payload, "action");
         }
       });
-    },
-    removeCompleted: (state, action: PayloadAction<task>) => {
-      // state.completed.map((task) => {
-      //   if (task.id === action.payload.id) {
-      //     state.completed.splice(task.id);
-      //     state.completed.map((taskId) => taskId.id > task.id && taskId.id - 1);
-      //   }
-      // });
-      console.log("juss");
     },
   },
 });
 
-export const {
-  addTask,
-  viewTaskDetail,
-  removeTask,
-  completeTask,
-  removeCompleted,
-} = TaskSlice.actions;
+export const { addTask, viewTaskDetail, removeTask, completeTask } =
+  TaskSlice.actions;
 export default TaskSlice.reducer;

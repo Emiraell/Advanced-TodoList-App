@@ -37,15 +37,16 @@ export const notificationSlice = createSlice({
     },
     removeNotification: (state, action: PayloadAction<notification>) => {
       state.contents.map((content) => {
-        if (content.message === action.payload.message) {
+        if (content.id === action.payload.id) {
           state.contents.splice(content.id, 1);
           state.contents.map((contentId) => {
-            contentId.id = content.id - 1;
+            if (contentId.id > content.id) {
+              contentId.id = contentId.id - 1;
+            }
           });
         }
       });
-      const notifications: notification[] = state.contents;
-      localStorage.setItem("messages", JSON.stringify(notifications));
+      localStorage.setItem("messages", JSON.stringify(state.contents));
     },
   },
 });
