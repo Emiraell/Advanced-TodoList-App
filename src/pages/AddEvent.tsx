@@ -37,8 +37,14 @@ export default function AddEvent() {
   const navigate = useNavigate();
 
   const addTodo = (data: dataProps) => {
+    const currentDate = new Date();
+    const dateCreated = ` ${currentDate.getFullYear()}-${
+      currentDate.getMonth() + 1
+    }-${currentDate.getDate()}`;
+
     const dataa: task = {
       ...data,
+      dateCreated,
       id: taskId,
       clicked: false,
       completed: false,
@@ -51,6 +57,7 @@ export default function AddEvent() {
         message: data.title,
       })
     );
+    console.log(data.date);
     navigate("/home");
   };
 
@@ -89,7 +96,7 @@ export default function AddEvent() {
         <input
           {...register("date")}
           id="date"
-          type="text"
+          type="date"
           className="input"
           placeholder="Oct 1, 2024"
         />

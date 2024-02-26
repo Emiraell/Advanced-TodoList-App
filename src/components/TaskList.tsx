@@ -44,17 +44,6 @@ export default function TaskList({ task, userName }: propss) {
     console.log(persons);
   };
 
-  // const removeComplete = (name: task) => {
-  //   dispatch(removeCompleted(name));
-  //   dispatch(
-  //     addNotification({
-  //       id: notifications.length,
-  //       header: "You deleted a task",
-  //       message: task.title,
-  //     })
-  //   );
-  //   console.log("completed deleted");
-  // };
   return (
     <div className="bg-blue-400 w-full p-5 rounded-2xl tracking-wider my-7 shadow-md even:bg-yellow-400 text-gray-800">
       <div
@@ -123,7 +112,7 @@ export default function TaskList({ task, userName }: propss) {
         <div className="my-10 flex items-center justify-between px-3">
           <div>
             <p className=" text-emerald-700 font-bold">Date Created</p>
-            <p className="text-sm px-1">oct 23, 2023</p>
+            <p className="text-sm px-1">{task.dateCreated}</p>
           </div>
           <div>
             <p className="text-emerald-700 font-bold">Task Date</p>

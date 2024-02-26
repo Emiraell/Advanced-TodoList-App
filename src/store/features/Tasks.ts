@@ -4,6 +4,7 @@ export type task = {
   id: number;
   title: string;
   date: string;
+  dateCreated: string;
   description: string;
   clicked: boolean;
   completed: boolean;
@@ -37,6 +38,7 @@ export const TaskSlice = createSlice({
       action: PayloadAction<{
         title: string;
         date: string;
+        dateCreated: string;
         description: string;
       }>
     ) => {
@@ -44,6 +46,7 @@ export const TaskSlice = createSlice({
         id: state.tasks.length,
         title: action.payload.title,
         date: action.payload.date,
+        dateCreated: action.payload.dateCreated,
         description: action.payload.description,
         clicked: false,
         completed: false,
