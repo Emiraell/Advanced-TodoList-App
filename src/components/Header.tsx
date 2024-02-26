@@ -8,60 +8,77 @@ import { notification } from "../store/features/notificationSlice";
 
 export default function Header() {
   const [menuClicked, setMenuClicked] = useState<boolean>(false);
-  const notification: notification[] | undefined = useAppSelector(
+  const notification: notification[] = useAppSelector(
     (state) => state.notificationReducer?.contents
   );
 
+  const [scrolledY, setScrolledY] = useState<boolean>(false);
+
+  window.addEventListener("scroll", () => {
+    if (window.scrollY > 100) {
+      setScrolledY(true);
+    } else {
+      setScrolledY(false);
+    }
+  });
   return (
-    <div>
+    <div className={``}>
       <div
-        className={`py-10 px-5 flex items-start fixed left-0 right-0 justify-between z-10`}
+        className={`${
+          menuClicked && "bg-gray-900 w-[70vw] h-[100vh]"
+        } fixed md:relative right-0 left-0`}
       >
         <div
-          className={` lg:px-14 ${
-            menuClicked &&
-            "bg-gray-950 h-[100vh] -top-10 -left-7 py-10 px-10 relative"
+          className={`flex justify-between w-[100%] pt-10 px-6 text-2xl ${
+            scrolledY && "bg-gray-900"
           }`}
         >
-          <div onClick={() => setMenuClicked(!menuClicked)}>
-            <FontAwesomeIcon
-              icon={faUser}
-              className={`h-8 ${
-                menuClicked && "hidden"
-              } md:hidden bg-emerald-900 p-3 rounded-full`}
-            />{" "}
-            <div
-              className={`flex font-rochester items-center justify-between text-2xl  ${
-                !menuClicked && "hidden"
-              } md:block`}
-            >
-              <p>
-                <span className="text-red-400 ">Emirael</span> Todo
+          <div>
+            <div className=" ml-5 flex justify-between">
+              <p
+                className={` ${
+                  !menuClicked && "hidden"
+                } font-rochester md:block`}
+              >
+                {" "}
+                <span className="text-red-400  ">Emirael</span> Todo
               </p>
-              <FontAwesomeIcon icon={faX} className={`h-5 md:hidden`} />
+              <div onClick={() => setMenuClicked(!menuClicked)}>
+                <FontAwesomeIcon
+                  icon={faUser}
+                  className={`md:hidden ${
+                    menuClicked && "hidden"
+                  } bg-emerald-600 p-3 rounded-full`}
+                />
+                <FontAwesomeIcon
+                  icon={faX}
+                  className={`${!menuClicked && "hidden"}`}
+                />
+              </div>
             </div>
-          </div>
-          <SideNav menuClicked={menuClicked} />
-        </div>
 
-        {/*  */}
-        <div className="flex items-center ">
-          {" "}
-          <Link to="/notifications">
-            <div className="flex justify-evenly w-20 relative  mx-5">
-              <FontAwesomeIcon icon={faBell} className="h-8" />
-
-              <p className="absolute bg-red-700 rounded-full py-1 px-2 -top-4 right-4">
-                {notification.length}
-              </p>
-            </div>
-          </Link>
-          <Link to="/add_event">
-            <FontAwesomeIcon
-              icon={faPlus}
-              className="h-6 bg-emerald-900 p-2 rounded-full"
+            <SideNav
+              menuClicked={menuClicked}
+              notification={notification.length}
             />
-          </Link>
+          </div>
+          <div
+            className={`flex justify-between md:hidden ${
+              menuClicked && "hidden"
+            }`}
+          >
+            <div className="relative mr-10">
+              <Link to="/notifications">
+                <FontAwesomeIcon icon={faBell} />
+                <p className="absolute -top-2 text-sm -right-2 bg-red-700 rounded-full py-1 px-2 ">
+                  {notification.length}
+                </p>
+              </Link>
+            </div>
+            <Link to="/add_event" className="mr-5">
+              <FontAwesomeIcon icon={faPlus} />
+            </Link>
+          </div>
         </div>
       </div>
     </div>

@@ -66,7 +66,7 @@ export default function Home() {
       <div className=" col-span-1">
         <Header />
       </div>
-      <div className="m-auto w-[90%] md:w-full text-start lg:pt-[17vh] pt-[12vh] col-span-3 md:border-l h-[100vh] md:px-20">
+      <div className="m-auto w-[90%] md:w-full text-start md:pt-[10vh] pt-[17vh] col-span-3 md:border-l h-[100vh] md:px-20">
         <div className="px-10">
           <p className="text-2xl md:text-3xl tracking-wider text-emerald-400 py-3 ">
             {greeting}{" "}

@@ -3,63 +3,62 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { changeUserName } from "../store/features/userNameSlice";
 import { useAppDispatch, useAppSelector } from "../store/store";
 import { useState } from "react";
-
-interface menuContent {
-  name: string;
-  path: string;
-}
+import { Link } from "react-router-dom";
 
 interface clickedMenu {
   menuClicked: boolean;
+  notification: number;
 }
-export default function SideNav({ menuClicked }: clickedMenu) {
+export default function SideNav({ menuClicked, notification }: clickedMenu) {
   const userName = useAppSelector((state) => state.userNameReducer.userName);
   const dispatch = useAppDispatch();
 
-  const [nameValue, setNameValue] = useState<string>("");
+  const [nameValue, setNameValue] = useState<string>(userName);
+  // const [name, setName] = useState<string>();
   const [editUser, setEditUser] = useState<boolean>(false);
-  return (
-    <div>
-      <div className={`${!menuClicked && "hidden"} md:block my-10`}>
-        <div className="flex items-center tracking-wide">
-          <FontAwesomeIcon
-            icon={faUser}
-            className="h-6 rounded-full bg-emerald-900 p-2"
-          />
-          <div className="-ml-4 px-6 mt-4">
-            <p className=" text-xl">{userName}</p>
-            <p
-              className="text-sm text-center"
-              onClick={() => setEditUser(true)}
-            >
-              {!editUser && "Edit"}
-            </p>
-          </div>
-        </div>
 
-        {/* Change user name */}
-        {editUser && (
-          <div className="mt-3">
-            <input
-              value={nameValue}
-              type="text"
-              className="w-28 outline-none rounded py-3 px-1 h-4 bg-gray-800 mr-2"
-              onChange={(e) => setNameValue(e.target.value)}
-            />
-            <span
-              onClick={() => {
-                dispatch(changeUserName(nameValue));
-                setEditUser(false);
-                setNameValue("");
-              }}
-            >
-              save
-            </span>
-          </div>
-        )}
-        <div className="my-16">
-          <button className=" bg-red-600 w-full rounded-md">Reset</button>
+  return (
+    <div className={`mt-12 md:mt-16 md:block ${!menuClicked && "hidden"} px-6`}>
+      <div className=" flex">
+        <FontAwesomeIcon icon={faUser} />
+        <p className="px-4">{userName}</p>
+      </div>
+      <div>
+        <input
+          value={nameValue}
+          onChange={(e) => setNameValue(e.target.value)}
+          type="text"
+          className={`w-36 py-1 px-1 bg-gray-800 rounded mr-2 outline-none text-sm my-2 ${
+            !editUser && "hidden"
+          }`}
+        />
+        <p
+          className=" text-center text-xl"
+          onClick={() => {
+            dispatch(changeUserName(nameValue));
+            setNameValue("");
+            setEditUser(!editUser);
+          }}
+        >
+          {editUser ? "Save" : "Edit"}
+        </p>
+      </div>
+
+      <div className="my-16 text-xl">
+        <Link to="/add_event" className="hidden md:block">
+          Add Event
+        </Link>
+        <div className="relative mr-10 my-9 hidden md:block">
+          <Link to="/notifications">
+            Notifications
+            <p className="absolute -top-2 text-sm -right-2 bg-red-700 rounded-full py-1 px-2 ">
+              {notification}
+            </p>
+          </Link>
         </div>
+        <button className="bg-red-600 w-36 rounded-md text-xl p-2 duration-0.5 hover:opacity-80">
+          Reset
+        </button>
       </div>
     </div>
   );
