@@ -48,9 +48,13 @@ export const notificationSlice = createSlice({
       });
       localStorage.setItem("messages", JSON.stringify(state.contents));
     },
+    resetNotifications: (state) => {
+      localStorage.removeItem("messages");
+      state.contents = initialState.contents;
+    },
   },
 });
 
-export const { addNotification, removeNotification } =
+export const { addNotification, removeNotification, resetNotifications } =
   notificationSlice.actions;
 export default notificationSlice.reducer;

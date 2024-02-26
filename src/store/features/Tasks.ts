@@ -107,9 +107,15 @@ export const TaskSlice = createSlice({
         }
       });
     },
+    reset: (state) => {
+      localStorage.removeItem("tasks");
+      localStorage.removeItem("completed");
+      state.completed = initialState.completed;
+      state.tasks = initialState.tasks;
+    },
   },
 });
 
-export const { addTask, viewTaskDetail, removeTask, completeTask } =
+export const { addTask, viewTaskDetail, removeTask, completeTask, reset } =
   TaskSlice.actions;
 export default TaskSlice.reducer;

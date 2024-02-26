@@ -1,9 +1,11 @@
 import { faUser } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { changeUserName } from "../store/features/userNameSlice";
+import { changeUserName, resetUserName } from "../store/features/userNameSlice";
 import { useAppDispatch, useAppSelector } from "../store/store";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { resetNotifications } from "../store/features/notificationSlice";
+import { reset } from "../store/features/Tasks";
 
 interface clickedMenu {
   menuClicked: boolean;
@@ -16,6 +18,13 @@ export default function SideNav({ menuClicked, notification }: clickedMenu) {
   const [nameValue, setNameValue] = useState<string>(userName);
   // const [name, setName] = useState<string>();
   const [editUser, setEditUser] = useState<boolean>(false);
+
+  const resetAll = () => {
+    dispatch(reset());
+    dispatch(resetUserName());
+    dispatch(resetNotifications());
+    console.log("reset");
+  };
 
   return (
     <div className={`mt-12 md:mt-16 md:block ${!menuClicked && "hidden"} px-6`}>
@@ -56,7 +65,10 @@ export default function SideNav({ menuClicked, notification }: clickedMenu) {
             </p>
           </Link>
         </div>
-        <button className="bg-red-600 w-36 rounded-md text-xl p-2 duration-0.5 hover:opacity-80">
+        <button
+          className="bg-red-600 w-36 rounded-md text-xl p-2 duration-0.5 hover:opacity-80"
+          onClick={resetAll}
+        >
           Reset
         </button>
       </div>

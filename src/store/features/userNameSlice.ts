@@ -15,7 +15,11 @@ export const userNameSlice = createSlice({
       let name: string = state.userName;
       localStorage.setItem("username", name);
     },
+    resetUserName: (state) => {
+      localStorage.removeItem("username");
+      state.userName = initialState.userName;
+    },
   },
 });
-export const { changeUserName } = userNameSlice.actions;
+export const { changeUserName, resetUserName } = userNameSlice.actions;
 export default userNameSlice.reducer;
