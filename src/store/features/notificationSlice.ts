@@ -10,28 +10,30 @@ export interface notificationState {
   contents: notification[];
 }
 
+// getting notification messages from my local storage
 const messages = localStorage.getItem("messages");
 
-let notificationMessage;
+let notificationMessages;
 try {
-  notificationMessage = messages && (JSON.parse(messages) as notification[]);
-} catch (err) {
-  console.log(err);
+  notificationMessages = messages && (JSON.parse(messages) as notification[]);
+} catch {
+  notificationMessages = [];
 }
 
 const initialState: notificationState = {
-  contents: notificationMessage || [],
+  contents: notificationMessages || [],
 };
 export const notificationSlice = createSlice({
   name: "notification",
   initialState,
   reducers: {
     addNotification: (state, action: PayloadAction<notification>) => {
-      state?.contents.push({
-        id: state.contents.length,
+      state?.contents.unshift({
+        id: -1,
         header: action.payload.header,
         message: action.payload.message,
       });
+      state.contents.map((content) => (content.id = content.id + 1));
       const notifications: notification[] = state.contents;
       localStorage.setItem("messages", JSON.stringify(notifications));
     },

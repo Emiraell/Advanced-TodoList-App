@@ -10,10 +10,6 @@ export type task = {
   completed: boolean;
 };
 
-// interface taskState {
-//   tasks: task[];
-// }
-
 const localData = localStorage.getItem("tasks");
 const completedTask = localStorage.getItem("completed");
 let result;
@@ -42,8 +38,8 @@ export const TaskSlice = createSlice({
         description: string;
       }>
     ) => {
-      state.tasks.push({
-        id: state.tasks.length,
+      state.tasks.unshift({
+        id: -1,
         title: action.payload.title,
         date: action.payload.date,
         dateCreated: action.payload.dateCreated,
@@ -51,6 +47,7 @@ export const TaskSlice = createSlice({
         clicked: false,
         completed: false,
       });
+      state.tasks.map((task) => (task.id = task.id + 1));
       const taskToStore: task[] = state.tasks;
       localStorage.setItem("tasks", JSON.stringify(taskToStore));
     },
@@ -94,17 +91,22 @@ export const TaskSlice = createSlice({
     completeTask: (state, action: PayloadAction<task>) => {
       state.tasks.map((comTask) => {
         if (comTask.id === action.payload.id) {
-          comTask.id = state.completed.length;
-          state.completed.push(comTask);
           state.tasks.splice(comTask.id, 1);
+          comTask.id = -1;
+          state.completed.unshift(comTask);
+          state.completed.map((task) => {
+            task.id = task.id + 1;
+            task.completed = true;
+          });
+
           state.tasks.map((taskId) => {
             if (taskId.id > comTask.id) {
               taskId.id = taskId.id - 1;
             }
-            comTask.completed = true;
-            localStorage.setItem("completed", JSON.stringify(state.completed));
           });
         }
+        localStorage.setItem("tasks", JSON.stringify(state.tasks));
+        localStorage.setItem("completed", JSON.stringify(state.completed));
       });
     },
     reset: (state) => {
