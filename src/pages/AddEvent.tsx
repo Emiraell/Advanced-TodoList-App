@@ -104,13 +104,7 @@ export default function AddEvent() {
         <label htmlFor="date" className="p-2">
           Date <span className="text-red-500">*</span>
         </label>
-        <input
-          {...register("date")}
-          id="date"
-          type="date"
-          className="input"
-          placeholder="Oct 1, 2024"
-        />
+        <input {...register("date")} id="date" type="date" className="input" />
         <p className="text-sm text-red-400 mb-5 px-2">{errors.date?.message}</p>
 
         {/* task description*/}
