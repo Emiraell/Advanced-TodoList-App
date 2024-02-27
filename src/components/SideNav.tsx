@@ -7,11 +7,13 @@ import { Link } from "react-router-dom";
 import { resetNotifications } from "../store/features/notificationSlice";
 import { reset } from "../store/features/Tasks";
 
+// type of received props
 interface clickedMenu {
   menuClicked: boolean;
   notification: number;
 }
 export default function SideNav({ menuClicked, notification }: clickedMenu) {
+  // read userName state from the redux store
   const userName = useAppSelector((state) => state.userNameReducer.userName);
   const dispatch = useAppDispatch();
 
@@ -19,6 +21,7 @@ export default function SideNav({ menuClicked, notification }: clickedMenu) {
   const [name, setName] = useState<string>(userName);
   const [editUser, setEditUser] = useState<boolean>(false);
 
+  // reset functionality
   const resetAll = () => {
     setName("User");
     setEditUser(false);

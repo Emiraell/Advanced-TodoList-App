@@ -8,12 +8,15 @@ import { messages } from "../store/features/notificationSlice";
 
 export default function Header() {
   const [menuClicked, setMenuClicked] = useState<boolean>(false);
+  // reading notification state from the redux store
   const notification: messages[] = useAppSelector(
     (state) => state.notificationReducer?.notifications
   );
 
+  // state to check when we scroll down the app
   const [scrolledY, setScrolledY] = useState<boolean>(false);
 
+  // change the status of scrolledY
   window.addEventListener("scroll", () => {
     if (window.scrollY > 100) {
       setScrolledY(true);
@@ -30,7 +33,7 @@ export default function Header() {
       >
         <div
           className={`flex justify-between w-[100%] pt-10 px-6 text-2xl ${
-            scrolledY && "bg-gray-900"
+            scrolledY && "bg-gray-900 md:bg-gray-950"
           }`}
         >
           <div>
@@ -40,7 +43,6 @@ export default function Header() {
                   !menuClicked && "hidden"
                 } font-rochester md:block`}
               >
-                {" "}
                 <span className="text-red-400  ">Emirael</span> Todo
               </p>
               <div onClick={() => setMenuClicked(!menuClicked)}>
@@ -56,7 +58,7 @@ export default function Header() {
                 />
               </div>
             </div>
-
+            {/* side bar when menuclicked is true or for medium screens upwards */}
             <SideNav
               menuClicked={menuClicked}
               notification={notification?.length}
