@@ -9,6 +9,7 @@ import { useNavigate } from "react-router-dom";
 
 export default function Notifications() {
   const history = useNavigate();
+  // read the notification state from the redux store
   const notifications: messages[] = useAppSelector(
     (state) => state.notificationReducer.notifications
   );
@@ -27,6 +28,7 @@ export default function Notifications() {
         </h2>
       </div>
 
+      {/* add notifications */}
       <div className="my-10">
         {notifications.map((notification, index) => (
           <div

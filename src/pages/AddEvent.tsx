@@ -9,23 +9,28 @@ import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { task } from "../store/features/Tasks";
 import { addNotification } from "../store/features/notificationSlice";
 
+// interface for data to push
 interface dataProps {
   title: string;
   date: string;
   description: string;
 }
 export default function AddEvent() {
+  // shape of the task data
   const schema = yup.object().shape({
     title: yup.string().required(),
     date: yup.string().required(),
     description: yup.string().required(),
   });
+
+  // handling the inputs with useform
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm({ resolver: yupResolver(schema) });
 
+  // reading the state of the reducers in the store
   const dispatch = useAppDispatch();
   const taskId: number = useAppSelector(
     (state) => state.taskReducer.tasks.length
@@ -34,22 +39,28 @@ export default function AddEvent() {
     (state) => state.notificationReducer.notifications.length
   );
 
+  // naviagtion
   const navigate = useNavigate();
 
+  // add task functionality
   const addTodo = (data: dataProps) => {
+    // get date of adding event
     const currentDate = new Date();
     const dateCreated = ` ${currentDate.getFullYear()}-${
       currentDate.getMonth() + 1
     }-${currentDate.getDate()}`;
 
-    const dataa: task = {
+    // data structure of task to add
+    const tasks: task = {
       ...data,
       dateCreated,
       id: taskId,
       clicked: false,
       completed: false,
     };
-    dispatch(addTask(dataa));
+    // add task using the actions in our stored reducers
+    dispatch(addTask(tasks));
+    // add notification
     dispatch(
       addNotification({
         id: notificationId - 1,
@@ -57,7 +68,7 @@ export default function AddEvent() {
         message: data.title,
       })
     );
-    console.log(data.date);
+    // navigate to home after adding
     navigate("/home");
   };
 
@@ -102,7 +113,7 @@ export default function AddEvent() {
         />
         <p className="text-sm text-red-400 mb-5 px-2">{errors.date?.message}</p>
 
-        {/* start time */}
+        {/* task description*/}
         <label htmlFor="description" className="p-2">
           Description <span className="text-red-500">*</span>
         </label>

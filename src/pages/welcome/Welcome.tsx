@@ -4,20 +4,22 @@ import { motion } from "framer-motion";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
+
 export function Welcome() {
+  // welcome page
   return (
-    <div className="  m-auto text-center w-[80%] md:w-[60%] lg:w-[40%] pt-10">
-      <div className=" font-rochester text-4xl text-gray-300">
+    <div className="m-auto text-center w-[80%] md:w-[60%] lg:w-[40%] pt-10">
+      <div className="font-rochester text-4xl text-gray-300">
         <span className=" text-red-700">emirael</span> todo
       </div>
 
       <motion.div
-        className=" py-10 "
+        className="py-10 "
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
         transition={{ delay: 0.5, duration: 4 }}
       >
-        <div className="mr-20 ">
+        <div className="mr-20">
           <img
             src={time}
             alt="clock"
