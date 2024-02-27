@@ -31,7 +31,7 @@ export default function AddEvent() {
     (state) => state.taskReducer.tasks.length
   );
   const notificationId = useAppSelector(
-    (state) => state.notificationReducer.contents.length
+    (state) => state.notificationReducer.notifications.length
   );
 
   const navigate = useNavigate();

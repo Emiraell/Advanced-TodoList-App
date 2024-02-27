@@ -6,13 +6,16 @@ import { notificationSlice } from "./features/notificationSlice";
 
 export const store = configureStore({
   reducer: {
+    // all reducers
     userNameReducer: userNameSlice.reducer,
     taskReducer: TaskSlice.reducer,
     notificationReducer: notificationSlice.reducer,
   },
 });
 
+// Changing or performing an action to change the initial state
 export const useAppDispatch: () => typeof store.dispatch = useDispatch;
+// Read the state in the redux
 export const useAppSelector: TypedUseSelectorHook<
   ReturnType<typeof store.getState>
 > = useSelector;

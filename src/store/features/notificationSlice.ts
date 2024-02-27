@@ -1,62 +1,75 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
-export interface notification {
+export interface messages {
   id: number;
   header: string;
   message: string;
 }
 
 export interface notificationState {
-  contents: notification[];
+  notifications: messages[];
 }
 
 // getting notification messages from my local storage
-const messages = localStorage.getItem("messages");
+const storedMessages = localStorage.getItem("messages");
 
+// get the message if localStorage is not falsy
 let notificationMessages;
 try {
-  notificationMessages = messages && (JSON.parse(messages) as notification[]);
+  notificationMessages =
+    storedMessages && (JSON.parse(storedMessages) as messages[]);
 } catch {
   notificationMessages = [];
 }
 
+// initial state of the notifications
 const initialState: notificationState = {
-  contents: notificationMessages || [],
+  notifications: notificationMessages || [],
 };
 export const notificationSlice = createSlice({
   name: "notification",
   initialState,
   reducers: {
-    addNotification: (state, action: PayloadAction<notification>) => {
-      state?.contents.unshift({
+    // add notifications/ messages to the state
+    addNotification: (state, action: PayloadAction<messages>) => {
+      state?.notifications.unshift({
         id: -1,
         header: action.payload.header,
         message: action.payload.message,
       });
-      state.contents.map((content) => (content.id = content.id + 1));
-      const notifications: notification[] = state.contents;
+      // increment the previous ids to set all ids to different values which
+      // will also be the index of the message in the array
+      state.notifications.map((content) => (content.id = content.id + 1));
+      const notifications: messages[] = state.notifications;
+      // store in local storage
       localStorage.setItem("messages", JSON.stringify(notifications));
     },
-    removeNotification: (state, action: PayloadAction<notification>) => {
-      state.contents.map((content) => {
+
+    // remove notifications
+    removeNotification: (state, action: PayloadAction<messages>) => {
+      state.notifications.map((content) => {
         if (content.id === action.payload.id) {
-          state.contents.splice(content.id, 1);
-          state.contents.map((contentId) => {
+          state.notifications.splice(content.id, 1);
+          state.notifications.map((contentId) => {
+            // decrement the ids of the messages after the deleted messages
             if (contentId.id > content.id) {
               contentId.id = contentId.id - 1;
             }
           });
         }
       });
-      localStorage.setItem("messages", JSON.stringify(state.contents));
+      // store/update in local storage
+      localStorage.setItem("messages", JSON.stringify(state.notifications));
     },
+    // reset the notifications
     resetNotifications: (state) => {
       localStorage.removeItem("messages");
-      state.contents = initialState.contents;
+      state.notifications = initialState.notifications;
     },
   },
 });
 
+//  export all actions
 export const { addNotification, removeNotification, resetNotifications } =
   notificationSlice.actions;
 export default notificationSlice.reducer;

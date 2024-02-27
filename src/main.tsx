@@ -7,6 +7,8 @@ import { store } from "./store/store.ts";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
+    {/* Wrap the appliaction with redux provider to access all
+    state available in our store anywhere in the application */}
     <Provider store={store}>
       <App />
     </Provider>

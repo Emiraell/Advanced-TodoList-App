@@ -1,6 +1,6 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  notification,
+  messages,
   removeNotification,
 } from "../store/features/notificationSlice";
 import { useAppDispatch, useAppSelector } from "../store/store";
@@ -9,8 +9,8 @@ import { useNavigate } from "react-router-dom";
 
 export default function Notifications() {
   const history = useNavigate();
-  const notifications: notification[] = useAppSelector(
-    (state) => state.notificationReducer.contents
+  const notifications: messages[] = useAppSelector(
+    (state) => state.notificationReducer.notifications
   );
 
   const dispatch = useAppDispatch();

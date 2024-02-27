@@ -7,7 +7,7 @@ import TaskList from "../components/TaskList";
 type displayState = { tasks: boolean; complete: boolean };
 
 export default function Home() {
-  let fullDate: any = new Date();
+  let fullDate: Date = new Date();
 
   const [displaying, setDisplaying] = useState<displayState>({
     tasks: true,

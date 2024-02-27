@@ -4,12 +4,12 @@ import { useState } from "react";
 import SideNav from "./SideNav";
 import { Link } from "react-router-dom";
 import { useAppSelector } from "../store/store";
-import { notification } from "../store/features/notificationSlice";
+import { messages } from "../store/features/notificationSlice";
 
 export default function Header() {
   const [menuClicked, setMenuClicked] = useState<boolean>(false);
-  const notification: notification[] = useAppSelector(
-    (state) => state.notificationReducer?.contents
+  const notification: messages[] = useAppSelector(
+    (state) => state.notificationReducer?.notifications
   );
 
   const [scrolledY, setScrolledY] = useState<boolean>(false);
@@ -59,7 +59,7 @@ export default function Header() {
 
             <SideNav
               menuClicked={menuClicked}
-              notification={notification.length}
+              notification={notification?.length}
             />
           </div>
           <div

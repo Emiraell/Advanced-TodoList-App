@@ -8,6 +8,7 @@ import Notifications from "./pages/Notifications";
 function App() {
   return (
     <div className=" text-gray-100 font-roboto tracking-wide">
+      {/* Application pages */}
       <Router>
         <Routes>
           <Route path="/" element={<Welcome />} />
