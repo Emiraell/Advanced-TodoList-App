@@ -3,6 +3,9 @@ import Header from "../components/Header";
 import { useAppSelector } from "../store/store";
 import { task } from "../store/features/Tasks";
 import TaskList from "../components/TaskList";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import { Link } from "react-router-dom";
 
 type displayState = { tasks: boolean; complete: boolean };
 
@@ -69,64 +72,74 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="md:grid grid-cols-4">
-      <div className=" col-span-1">
-        {/* header component */}
-        <Header />
+    <div>
+      <div className="md:grid grid-cols-4">
+        <div className=" col-span-1">
+          {/* header component */}
+          <Header />
+        </div>
+        {/* home contents */}
+        <div className="m-auto w-[90%] md:w-full text-start md:pt-[10vh] pt-[17vh] col-span-3 md:border-l h-[100vh] md:px-20">
+          <div className="px-10">
+            <p className="text-2xl md:text-3xl tracking-wider text-emerald-400 py-3 ">
+              {greeting} {/* display username if not user */}
+              <span className=" text-gray-100">
+                {userName !== "user" && userName}
+              </span>
+            </p>
+            {/* display day and date */}
+            <p className=" font-rochester text-lg md:text-xl">Today's {day}</p>
+            <p className=" text-gray-400 text-xs">
+              {month} {date}, {year}
+            </p>
+          </div>
+          <div className="pt-12 px-10 flex items-center text-xl">
+            <p
+              onClick={() => setDisplaying({ tasks: true, complete: false })}
+              className={`${
+                displaying.tasks && "border-b-2"
+              }  w-fit pb-2 border-emerald-500`}
+            >
+              {/* all task */}
+              <span className=" bg-gray-300 text-gray-900 px-3 py-1 rounded-full mr-2">
+                {tasks.length}
+              </span>
+              Tasks
+            </p>
+            <p
+              onClick={() => setDisplaying({ tasks: false, complete: true })}
+              className={` ${
+                displaying.complete && "border-b-2"
+              } w-fit pb-2 border-emerald-500 mx-10`}
+            >
+              {/* completed task */}
+              <span className=" bg-gray-300 text-gray-900 px-3 py-1 rounded-full m-2">
+                {completedTasks.length}
+              </span>
+              completed
+            </p>
+          </div>
+          {/* display tasked based on the if task property is true */}
+          <div className="mt-10 lg:grid grid-cols-2 gap-4">
+            {/* display tasks */}
+            {displaying.tasks
+              ? tasks.map((task, index) => (
+                  <TaskList key={index} task={task} userName={userName} />
+                ))
+              : // display completed tasks
+                completedTasks.map((task, index) => (
+                  <TaskList key={index} task={task} userName={userName} />
+                ))}
+          </div>
+        </div>
       </div>
-      {/* home contents */}
-      <div className="m-auto w-[90%] md:w-full text-start md:pt-[10vh] pt-[17vh] col-span-3 md:border-l h-[100vh] md:px-20">
-        <div className="px-10">
-          <p className="text-2xl md:text-3xl tracking-wider text-emerald-400 py-3 ">
-            {greeting} {/* display username if not user */}
-            <span className=" text-gray-100">
-              {userName !== "user" && userName}
-            </span>
-          </p>
-          {/* display day and date */}
-          <p className=" font-rochester text-lg md:text-xl">Today's {day}</p>
-          <p className=" text-gray-400 text-xs">
-            {month} {date}, {year}
-          </p>
-        </div>
-        <div className="pt-12 px-10 flex items-center text-xl">
-          <p
-            onClick={() => setDisplaying({ tasks: true, complete: false })}
-            className={`${
-              displaying.tasks && "border-b-2"
-            }  w-fit pb-2 border-emerald-500`}
-          >
-            {/* all task */}
-            <span className=" bg-gray-300 text-gray-900 px-3 py-1 rounded-full mr-2">
-              {tasks.length}
-            </span>
-            Tasks
-          </p>
-          <p
-            onClick={() => setDisplaying({ tasks: false, complete: true })}
-            className={` ${
-              displaying.complete && "border-b-2"
-            } w-fit pb-2 border-emerald-500 mx-10`}
-          >
-            {/* completed task */}
-            <span className=" bg-gray-300 text-gray-900 px-3 py-1 rounded-full m-2">
-              {completedTasks.length}
-            </span>
-            completed
-          </p>
-        </div>
-        {/* display tasked based on the if task property is true */}
-        <div className="mt-10 lg:grid grid-cols-2 gap-4">
-          {/* display tasks */}
-          {displaying.tasks
-            ? tasks.map((task, index) => (
-                <TaskList key={index} task={task} userName={userName} />
-              ))
-            : // display completed tasks
-              completedTasks.map((task, index) => (
-                <TaskList key={index} task={task} userName={userName} />
-              ))}
-        </div>
+      <div className="text-center fixed bottom-10 left-0 right-0 z-10">
+        <Link to="/advanced_todolist_app/add_event">
+          <FontAwesomeIcon
+            icon={faPlus}
+            className=" bg-emerald-500 p-3 rounded-full text-4xl hover:opacity-75 duration-0.5 ease-in-out"
+          />
+        </Link>
       </div>
     </div>
   );
