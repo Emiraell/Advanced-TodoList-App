@@ -51,7 +51,7 @@ export function Welcome() {
         className="pt-10 flex items-center"
       >
         <span className="text-lg px-5">Get started</span>{" "}
-        <Link to="/home">
+        <Link to="/advanced_todolist_app/home">
           <FontAwesomeIcon
             icon={faArrowRight}
             className="text-3xl text-gray-900 bg-gray-200 rounded-full py-2 px-3"

@@ -70,14 +70,14 @@ export default function Header() {
             }`}
           >
             <div className="relative mr-10">
-              <Link to="/notifications">
+              <Link to="/advanced_todolist_app/notifications">
                 <FontAwesomeIcon icon={faBell} />
                 <p className="absolute -top-2 text-sm -right-2 bg-red-700 rounded-full py-1 px-2 ">
                   {notification.length}
                 </p>
               </Link>
             </div>
-            <Link to="/add_event" className="mr-5">
+            <Link to="/advanced_todolist_app/add_event" className="mr-5">
               <FontAwesomeIcon icon={faPlus} />
             </Link>
           </div>

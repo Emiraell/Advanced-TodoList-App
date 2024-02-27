@@ -69,13 +69,13 @@ export default function AddEvent() {
       })
     );
     // navigate to home after adding
-    navigate("/home");
+    navigate("/advanced_todolist_app/home");
   };
 
   return (
     <div className="m-auto w-[85%] md:w-[60%] lg:w-[40%] ">
       <div className="py-12 text-2xl text-emerald-400 font-bold flex items-center">
-        <Link to="/home">
+        <Link to="/advanced_todolist_app/home">
           <FontAwesomeIcon icon={faArrowLeft} className="pl-4" />
         </Link>
         <p className="font-montserrat px-20 md:px-32 lg:px-36">New Task</p>

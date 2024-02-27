@@ -11,10 +11,16 @@ function App() {
       {/* Application pages */}
       <Router>
         <Routes>
-          <Route path="/" element={<Welcome />} />
-          <Route path="/home" element={<Home />} />
-          <Route path="/add_event" element={<AddEvent />} />
-          <Route path="/notifications" element={<Notifications />} />
+          <Route path="/advanced_todolist_app" element={<Welcome />} />
+          <Route path="/advanced_todolist_app/home" element={<Home />} />
+          <Route
+            path="/advanced_todolist_app/add_event"
+            element={<AddEvent />}
+          />
+          <Route
+            path="/advanced_todolist_app/notifications"
+            element={<Notifications />}
+          />
         </Routes>
       </Router>
     </div>

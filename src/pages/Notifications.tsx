@@ -20,7 +20,7 @@ export default function Notifications() {
       <div className="flex">
         <FontAwesomeIcon
           icon={faArrowLeft}
-          onClick={() => history("/home")}
+          onClick={() => history("/advanced_todolist_app/home")}
           className="text-2xl"
         />
         <h2 className=" text-center text-xl font-montserrat px-20 md:px-32 lg:px-36">

@@ -63,11 +63,11 @@ export default function SideNav({ menuClicked, notification }: clickedMenu) {
       </div>
 
       <div className="my-16 text-xl">
-        <Link to="/add_event" className="hidden md:block">
+        <Link to="/advanced_todolist_app/add_event" className="hidden md:block">
           Add Event
         </Link>
         <div className="relative mr-10 my-9 hidden md:block">
-          <Link to="/notifications">
+          <Link to="/advanced_todolist_app/notifications">
             Notifications
             <p className="absolute -top-2 text-sm -right-2 bg-red-700 rounded-full py-1 px-2 ">
               {notification}
