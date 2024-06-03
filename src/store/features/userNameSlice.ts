@@ -6,7 +6,7 @@ interface userState {
 }
 
 // get username from local storage
-const name: string = localStorage.getItem("username") || "user";
+const name: string = sessionStorage.getItem("username") || "user";
 
 // initial value/state of the name
 const initialState: userState = { userName: name };
@@ -19,11 +19,11 @@ export const userNameSlice = createSlice({
       state.userName = action.payload;
       // store in local storage
       let name: string = state.userName;
-      localStorage.setItem("username", name);
+      sessionStorage.setItem("username", name);
     },
     // reset the userName
     resetUserName: (state) => {
-      localStorage.removeItem("username");
+      sessionStorage.removeItem("username");
       state.userName = initialState.userName;
     },
   },

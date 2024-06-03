@@ -6,6 +6,7 @@ import TaskList from "../components/TaskList";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
+import { format } from "date-fns";
 
 type displayState = { tasks: boolean; complete: boolean };
 
@@ -30,10 +31,6 @@ export default function Home() {
 
   // get the current time, day, month and year,
   const [greeting, setGreeting] = useState<string>();
-  const [day, setDay] = useState<string>();
-  const date: number = fullDate.getDate();
-  const [month, setMonth] = useState<string>();
-  const year: number = fullDate.getFullYear();
 
   // set time on page load
   useEffect((): ReturnType<EffectCallback> => {
@@ -42,31 +39,6 @@ export default function Home() {
     hour >= 0 && hour < 12 && setGreeting("Good Morning");
     hour > 11 && hour < 16 && setGreeting("Good Afternoon");
     hour >= 16 && setGreeting("Good Evening");
-
-    // day
-    const day: number = fullDate.getDay();
-    day === 0 && setDay("Sunday");
-    day === 1 && setDay("Monday");
-    day === 2 && setDay("Tuesday");
-    day === 3 && setDay("Wednesday");
-    day === 4 && setDay("Thursday");
-    day === 6 && setDay("Friday");
-    day === 7 && setDay("Saturday");
-
-    // month
-    const month: number = fullDate.getMonth();
-    month === 0 && setMonth("Jan");
-    month === 1 && setMonth("Feb");
-    month === 2 && setMonth("Mar");
-    month === 3 && setMonth("Apr");
-    month === 4 && setMonth("May");
-    month === 5 && setMonth("Jun");
-    month === 6 && setMonth("Jul");
-    month === 7 && setMonth("Aug");
-    month === 8 && setMonth("Sep");
-    month === 9 && setMonth("Oct");
-    month === 10 && setMonth("Nov");
-    month === 11 && setMonth("Dec");
 
     return (): void => {};
   }, []);
@@ -81,16 +53,18 @@ export default function Home() {
         {/* home contents */}
         <div className="m-auto w-[90%] md:w-full text-start md:pt-[10vh] pt-[17vh] col-span-3 md:border-l h-[100vh] md:px-20">
           <div className="px-10">
-            <p className="text-2xl md:text-3xl tracking-wider text-emerald-400 py-3 ">
+            <p className="md:text-lg tracking-wide text-emerald-400 py-3 ">
               {greeting} {/* display username if not user */}
               <span className=" text-gray-100">
-                {userName !== "user" && userName}
+                {userName !== "user" ? userName : "User"}
               </span>
             </p>
             {/* display day and date */}
-            <p className=" font-rochester text-lg md:text-xl">Today's {day}</p>
+            <p className=" font-rochester text-lg md:text-xl">
+              Today's {format(fullDate, "EEEE")}
+            </p>
             <p className=" text-gray-400 text-xs">
-              {month} {date}, {year}
+              {format(fullDate, "MMM do, yyyy")}
             </p>
           </div>
           <div className="pt-12 px-10 flex items-center text-xl">

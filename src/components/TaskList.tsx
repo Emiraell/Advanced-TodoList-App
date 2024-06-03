@@ -121,7 +121,6 @@ export default function TaskList({ task, userName }: propss) {
           </div>
         </div>
         <div className="text-lg">
-          {" "}
           <h2 className="font-bold text-emerald-700 lowercase">
             Task Description
           </h2>

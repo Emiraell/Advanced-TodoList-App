@@ -11,9 +11,9 @@ export interface notificationState {
 }
 
 // getting notification messages from my local storage
-const storedMessages = localStorage.getItem("messages");
+const storedMessages = sessionStorage.getItem("messages");
 
-// get the message if localStorage is not falsy
+// get the message if sessionStorage is not falsy
 let notificationMessages;
 try {
   notificationMessages =
@@ -42,7 +42,7 @@ export const notificationSlice = createSlice({
       state.notifications.map((content) => (content.id = content.id + 1));
       const notifications: messages[] = state.notifications;
       // store in local storage
-      localStorage.setItem("messages", JSON.stringify(notifications));
+      sessionStorage.setItem("messages", JSON.stringify(notifications));
     },
 
     // remove notifications
@@ -59,11 +59,11 @@ export const notificationSlice = createSlice({
         }
       });
       // store/update in local storage
-      localStorage.setItem("messages", JSON.stringify(state.notifications));
+      sessionStorage.setItem("messages", JSON.stringify(state.notifications));
     },
     // reset the notifications
     resetNotifications: (state) => {
-      localStorage.removeItem("messages");
+      sessionStorage.removeItem("messages");
       state.notifications = initialState.notifications;
     },
   },

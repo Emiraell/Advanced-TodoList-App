@@ -11,9 +11,9 @@ export type task = {
   completed: boolean;
 };
 // get task from local storage
-const allTasks = localStorage.getItem("tasks");
+const allTasks = sessionStorage.getItem("tasks");
 // get completed task from local storage
-const completedTask = localStorage.getItem("completed");
+const completedTask = sessionStorage.getItem("completed");
 
 // check if tasks are available in local storage
 let tasksTodo;
@@ -60,7 +60,7 @@ export const TaskSlice = createSlice({
       state.tasks.map((task) => (task.id = task.id + 1));
       // store/update in local storage
       const taskToStore: task[] = state.tasks;
-      localStorage.setItem("tasks", JSON.stringify(taskToStore));
+      sessionStorage.setItem("tasks", JSON.stringify(taskToStore));
     },
 
     // access the details of the task by changing the clicked property
@@ -90,7 +90,7 @@ export const TaskSlice = createSlice({
           }
         });
         // update/ store in local storage
-        localStorage.setItem("tasks", JSON.stringify(state.tasks));
+        sessionStorage.setItem("tasks", JSON.stringify(state.tasks));
       } else {
         // remove if item is located is set as completed
         state.completed.map((task) => {
@@ -104,7 +104,7 @@ export const TaskSlice = createSlice({
           }
         });
         // store/update local storage
-        localStorage.setItem("completed", JSON.stringify(state.completed));
+        sessionStorage.setItem("completed", JSON.stringify(state.completed));
       }
     },
 
@@ -129,15 +129,15 @@ export const TaskSlice = createSlice({
           });
         }
         // update in local storage
-        localStorage.setItem("tasks", JSON.stringify(state.tasks));
-        localStorage.setItem("completed", JSON.stringify(state.completed));
+        sessionStorage.setItem("tasks", JSON.stringify(state.tasks));
+        sessionStorage.setItem("completed", JSON.stringify(state.completed));
       });
     },
 
     // reset all tasks states
     reset: (state) => {
-      localStorage.removeItem("tasks");
-      localStorage.removeItem("completed");
+      sessionStorage.removeItem("tasks");
+      sessionStorage.removeItem("completed");
       state.completed = initialState.completed;
       state.tasks = initialState.tasks;
     },
